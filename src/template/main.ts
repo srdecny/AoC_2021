@@ -6,20 +6,11 @@ function part1(input: string): string {
 }
 
 function part2(input: string): string {
-
 	return "";
 }
 
 
-function main() {
-	const input = readFileSync("input.txt", "utf8").trim();
-	console.log("Part 1: " + part1(input));
-	console.log("Part 2: " + part2(input));
-}
-
-function test() {
-	runTests("tests.json", part1, part2);
-}
-
-test()
-main()
+runTests("tests.json", part1, part2);
+const input = readFileSync("input.txt", "utf8").trim();
+console.log("Part 1: " + part1(input));
+console.log("Part 2: " + part2(input));
