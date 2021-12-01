@@ -23,13 +23,15 @@ interface TestCase {
 	"expected" : string;
 }
 
-export const runTests = (testFile: string, part1: (input: string) => string, part2: (input: string) => string) => {
+type Solution = (input: string) => string | number;
+
+export const runTests = (testFile: string, part1: Solution, part2: Solution) => {
 		const testSamples: Record<string, [TestCase]> = JSON.parse(readFileSync(testFile, "utf8"));
 	["part1", "part2"].forEach(part => {
 			testSamples[part].forEach(test => {
 				const testInput = readFileSync(test.input, "utf8");
 				const result = part === "part1" ? part1(testInput) : part2(testInput);
-				if (result !== test.expected) {
+				if (result.toString() !== test.expected) {
 					console.log(`Test failed for ${part}: ${test.input}`);
 					console.log(`Expected: ${test.expected}`);
 					console.log(`Got: ${result}`);
