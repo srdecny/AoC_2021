@@ -18,6 +18,10 @@ export const eachCons = <T>(n: number, arr: T[]): T[][] => {
 		return result;
 }
 
+export const transpose = <T>(matrix: T[][]): T[][] => {
+		return matrix[0].map((_, i) => matrix.map(row => row[i]));
+}
+
 interface TestCase {
 	"input": string;
 	"expected" : string;
