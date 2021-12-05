@@ -7,7 +7,9 @@ export function getLines(path: string, delimiter: string = "\n") {
 export const range = (start: number, end: number): number[] => {
     if (start <= end) {
         return Array.from({length: (end + 1 - start)}, (_, k) => k + start);
-    } else return range(end, start);
+    } else {
+        return Array.from({length: (start + 1 - end)}, (_, k) => start - k);
+		}
 }
 
 export const eachCons = <T>(n: number, arr: T[]): T[][] => {
