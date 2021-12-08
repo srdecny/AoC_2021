@@ -1,4 +1,4 @@
-import { eachCons, runTests } from "../utils";
+import { runTests } from "../utils";
 import { readFileSync } from "fs";
 
 function part1(input: string): string|number {
