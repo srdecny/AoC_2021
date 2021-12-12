@@ -21,6 +21,7 @@ type Search = {
 	visited: Set<string>;
 	path: string[];
 	current: string;
+	visitedTwice: string
 }
 
 function part1(input: string): number {
@@ -28,7 +29,8 @@ function part1(input: string): number {
 	const searchQueue: Search[] = [{
 		visited: new Set(["start"]),
 		path: ["start"],
-		current: "start"
+		current: "start",
+		visitedTwice: ""
 	}]
 	let paths = 0;
 	while (searchQueue.length > 0) {
@@ -43,7 +45,8 @@ function part1(input: string): number {
 				searchQueue.push({
 					visited: isLowercase(next) ? new Set([...search.visited, next]) : new Set([...search.visited]),
 					path: [...search.path, next],
-					current: next
+					current: next,
+					visitedTwice: search.visitedTwice
 				})
 			}
 		}
@@ -52,7 +55,41 @@ function part1(input: string): number {
 }
 
 function part2(input: string): number {
-	return "";
+	const map = parseInput(input);
+	const searchQueue: Search[] = [{
+		visited: new Set(["start"]),
+		path: ["start"],
+		current: "start",
+		visitedTwice: ""
+	}]
+	let paths = new Set<string>();
+	while (searchQueue.length > 0) {
+		const search = searchQueue.pop();
+		if (search.current === "end") {
+			paths.add(search.path.join(","));
+			continue
+		}
+		for (const next of map[search.current] || []) {
+			if (!search.visited.has(next)) {
+				const isLowercase = (str: string) => [...str].every(c => c.toLowerCase() === c);
+				searchQueue.push({
+					visited: isLowercase(next) ? new Set([...search.visited, next]) : new Set([...search.visited]),
+					path: [...search.path, next],
+					current: next,
+					visitedTwice: search.visitedTwice
+				})
+				if (isLowercase(next) && search.visitedTwice === "") {
+					searchQueue.push({
+						visited: new Set([...search.visited]),
+						path: [...search.path, next],
+						current: next,
+						visitedTwice: next
+					})
+				}
+			}
+		}
+	}
+	return paths.size;
 }
 
 
