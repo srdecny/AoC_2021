@@ -12,6 +12,7 @@
     "typescript": "^4.5.2"
   },
   "dependencies": {
-    "@types/node": "^16.11.10"
+    "@types/node": "^16.11.10",
+    "priorityqueuejs": "^2.0.0"
   }
 }
