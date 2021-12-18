@@ -11,8 +11,8 @@
 	],
 	"part2": [
 		{
-			"input": "test1.txt",
-			"expected": ""
+			"input": "test2.txt",
+			"expected": "3993"
 		}
 	]
 }

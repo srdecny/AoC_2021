@@ -133,10 +133,9 @@ function magnitude(node: Node): number {
 	}
 }
 
-function part1(input: string): number {
-	const nodes = input.split("\n").map(l => parse(l.split("")));
-	const final = nodes.reduce((acc, node) => {
-		let root = addNodes(acc, node);
+
+function sumNodes (first: Node, second: Node): Node {
+		let root = addNodes(first, second);
 		let order = traverseTree(root, 0);
 		while (true) {
 			order = traverseTree(root, 0);
@@ -148,12 +147,27 @@ function part1(input: string): number {
 			break;
 		}
 		return root
-	})
+}
+
+function part1(input: string): number {
+	const nodes = input.split("\n").map(l => parse(l.split("")));
+	const final = nodes.reduce((acc, node) => sumNodes(acc, node))
 	return magnitude(final)
 }
 
-function part2(input: string): string|number {
-	return "";
+function part2(input: string): number {
+	let nodes = input.split("\n").map(l => parse(l.split("")));
+	const clone = (obj: any) => JSON.parse(JSON.stringify(obj));
+	let maxMagniture = -Infinity
+	for (let i = 0; i < nodes.length; i++) {
+		for (let j = 0; j < nodes.length; j++) {
+			if (i == j) continue;
+			const final = sumNodes(clone(nodes[i]), clone(nodes[j]));
+			const newMagnitude = magnitude(final)
+			if (newMagnitude > maxMagniture) maxMagniture = newMagnitude
+		}
+	}
+	return maxMagniture
 }
 
 
